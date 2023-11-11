@@ -29,8 +29,13 @@ public class TickControl : MonoBehaviour
         m_TickTok.SetActive(false);
     }
 
+    public void ShowCompany()
+    {
+        m_Company.gameObject.SetActive(true);
+    }
     private void OnCompanyClick()
     {
+        m_Company.gameObject.SetActive(false);
         DriverManager.Instance.StartGame();
     }
 

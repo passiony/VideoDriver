@@ -39,7 +39,7 @@ public class DriverManager : MonoBehaviour
         {
             return;
         }
-        
+
         Debug.Log("自动驾驶开始");
         m_MainHead.StartGame();
         m_Viewer.StartGame();
@@ -65,7 +65,7 @@ public class DriverManager : MonoBehaviour
         m_MainHead.StopGame();
         m_Viewer.StopGame();
         StopCoroutine("CoTestModeTimer");
-        
+
         //停止播放
         var videos = current.GetComponentsInChildren<VideoPlayer>();
         foreach (var video in videos)
@@ -106,6 +106,8 @@ public class DriverManager : MonoBehaviour
 
         current = m_Groups[(int)mode];
         current.SetActive(true);
+        var company = current.GetComponentInChildren<TickControl>(true);
+        company.ShowCompany();
         // StartGame();
         if (test)
         {
