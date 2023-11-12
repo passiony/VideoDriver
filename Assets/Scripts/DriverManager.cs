@@ -48,9 +48,10 @@ public class DriverManager : MonoBehaviour
         var videos = current.GetComponentsInChildren<VideoPlayer>();
         foreach (var video in videos)
         {
+            video.Stop();
             video.Play();
         }
-
+        m_EnvPlayer.Stop();
         m_EnvPlayer.Play();
     }
 
@@ -70,14 +71,20 @@ public class DriverManager : MonoBehaviour
         var videos = current.GetComponentsInChildren<VideoPlayer>();
         foreach (var video in videos)
         {
-            video.Stop();
+            video.Pause();
         }
-
-        m_EnvPlayer.Stop();
+        m_EnvPlayer.Pause();
 
         //隐藏groups
-        Debug.Log("播放完成，开始截图");
-        StartCoroutine(CoCapture());
+        if (m_Test)
+        {
+            UIControl.Instance.ShowStart();
+        }
+        else
+        {
+            Debug.Log("播放完成，开始截图");
+            StartCoroutine(CoCapture());
+        }
     }
 
     private void Update()
@@ -109,7 +116,7 @@ public class DriverManager : MonoBehaviour
         var company = current.GetComponentInChildren<TickControl>(true);
         company.ShowCompany();
         // StartGame();
-        if (test)
+        if (m_Test)
         {
             StartCoroutine("CoTestModeTimer");
         }

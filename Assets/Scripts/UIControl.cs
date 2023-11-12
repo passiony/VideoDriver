@@ -56,6 +56,11 @@ public class UIControl : MonoBehaviour
         DriverManager.Instance.SetMode(index);
     }
 
+    public void ShowStart()
+    {
+        StartPanel.SetActive(true);
+        GroupPanel.SetActive(false);
+    }
     public void ShowGroup()
     {
         StartPanel.SetActive(false);
