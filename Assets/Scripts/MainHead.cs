@@ -8,9 +8,11 @@ public class MainHead : MonoBehaviour
     [SerializeField] private Transform m_Camera;
     [SerializeField] private HeatMap2D_My m_HeatMap;
     [SerializeField] private CaptureUtil m_CaptureUtil;
+    [SerializeField] private GameObject m_Indicator;
+    
     private bool Pause = true;
     private MeshRenderer m_HeatMesh;
-
+    
     private void Awake()
     {
         m_HeatMesh = m_HeatMap.GetComponent<MeshRenderer>();
@@ -25,7 +27,6 @@ public class MainHead : MonoBehaviour
 
     public void StopGame()
     {
-        m_HeatMesh.enabled = true;
         Pause = true;
     }
 
@@ -39,6 +40,20 @@ public class MainHead : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         m_HeatMesh.enabled = false;
+    }
+
+    private void Update()
+    {
+        int layer = 1 << LayerMask.NameToLayer("HeatMap")|1 << LayerMask.NameToLayer("Collider");
+        if (Physics.Raycast(m_Camera.position, m_Camera.forward, out RaycastHit hit, 100, layer))
+        {
+            m_Indicator.SetActive(true);
+            m_Indicator.transform.position = hit.point;
+        }
+        else
+        {
+            m_Indicator.SetActive(false);
+        }
     }
 
     void FixedUpdate()
