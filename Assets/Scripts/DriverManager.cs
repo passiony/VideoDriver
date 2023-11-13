@@ -97,7 +97,10 @@ public class DriverManager : MonoBehaviour
 
     IEnumerator CoCapture()
     {
-        yield return m_MainHead.CoCapture(m_Mode);
+        yield return m_MainHead.CoCapture1(m_Mode);
+        yield return new WaitForSeconds(0.1f);
+        yield return m_MainHead.CoCapture2(m_Mode);
+        yield return new WaitForSeconds(0.1f);
         yield return m_Viewer.CoCapture(m_Mode);
         UIControl.Instance.ShowGroup();
     }

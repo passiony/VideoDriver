@@ -7,7 +7,8 @@ public class MainHead : MonoBehaviour
 {
     [SerializeField] private Transform m_Camera;
     [SerializeField] private HeatMap2D_My m_HeatMap;
-    [SerializeField] private CaptureUtil m_CaptureUtil;
+    [SerializeField] private CaptureUtil m_CaptureUtil1;
+    [SerializeField] private CaptureUtil m_CaptureUtil2;
     [SerializeField] private GameObject m_Indicator;
     
     private bool Pause = true;
@@ -30,18 +31,30 @@ public class MainHead : MonoBehaviour
         Pause = true;
     }
 
-    public IEnumerator CoCapture(int group)
+    public IEnumerator CoCapture1(int group)
     {
         Debug.Log("播放完成，开始截图");
 
         m_HeatMesh.enabled = true;
         string fileName = $"heatmap_group{group}_" + DateTime.Now.ToString("yyyyMMddHHmmssffff");
-        m_CaptureUtil.CaptureToLocal(fileName, 2048, 1024);
+        m_CaptureUtil1.CaptureToLocal(fileName, 2048, 1024);
 
         yield return new WaitForSeconds(0.1f);
         m_HeatMesh.enabled = false;
     }
 
+    public IEnumerator CoCapture2(int group)
+    {
+        Debug.Log("播放完成，开始截图");
+
+        m_HeatMesh.enabled = true;
+        string fileName = $"heatmap_group{group}_" + DateTime.Now.ToString("yyyyMMddHHmmssffff");
+        m_CaptureUtil2.CaptureToLocal(fileName, 2048, 1024);
+        
+        yield return new WaitForSeconds(0.1f);
+        m_HeatMesh.enabled = false;
+    }
+    
     private void Update()
     {
         int layer = 1 << LayerMask.NameToLayer("HeatMap")|1 << LayerMask.NameToLayer("Collider");
